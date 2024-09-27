@@ -11,6 +11,7 @@ import Spinner from './components/Spinner';
 function App() {
   const [courses, setCourses] = useState([]);
   const [loading , setLoading] = useState(true);
+  const [category, setCategory] = useState(filterData[0].title);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -31,20 +32,20 @@ function App() {
   }, []);
 
   return (
-    <div className=''>
-     <div>  <Navbar /></div>
-     <div> <Filter filterData={filterData} /></div> 
-     <div> 
-      {
-        loading ? (
-          <Spinner/>
-        ) : (
-          <Cards courses={courses} />
-        )
-      }
-      </div> 
+    <div className="flex flex-col ">
+      <Navbar />
+      <div
+        className="bg-bgDark2 min-h-screen">
+        <Filter filterData={filterData} category={category} setCategory={setCategory} />
+
+        <div className="w-11/12 max-w-[1200px]  mx-auto flex flex-wrap items-center justify-center">
+          {
+            loading ? <Spinner /> : <Cards courses={courses} category={category} />
+          }
+        </div>
+      </div>
     </div>
-  );
+  )
 }
 
 export default App;
